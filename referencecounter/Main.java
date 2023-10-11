@@ -54,29 +54,31 @@ public class Main {
         Runnable task = () -> {
             coffeeShop.addReference();
             System.out.println(coffeeShop.getCount());
+            synchronized (coffeeShop){
             try {
                 Thread.sleep(3000);
                 coffeeShop.setSells("caramel", 500);
                 System.out.println(coffeeShop.getSells());
-                System.out.println(coffeeShop.sellsOf("caramel")+" T1");
+                System.out.println(coffeeShop.sellsOf("caramel")+Thread.currentThread().getName());
                 } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                };
+                };};
         Thread t1 = new Thread(task);
         Thread t2 = new Thread(task);
         Thread t3 = new Thread(() -> {
             coffeeShop.addReference();
             System.out.println(coffeeShop.getCount());
+            synchronized (coffeeShop){
             try {
                 Thread.sleep(1000);
                 coffeeShop.setSells("caramel", -200);
                 System.out.println(coffeeShop.getSells());
-                System.out.println(coffeeShop.sellsOf("caramel")+" T1");
+                System.out.println(coffeeShop.sellsOf("caramel")+Thread.currentThread().getName());
                 } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                });
+                };});
 
 
         t1.start();
