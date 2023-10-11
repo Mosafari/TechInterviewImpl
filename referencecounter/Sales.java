@@ -2,14 +2,20 @@ package referencecounter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 // Singleton Child
 public class Sales extends ReferenceCounter {
-        private Map<String, Integer> sells;
+        private  Map<String, Integer> sells;
+
+        public Map<String, Integer> getSells() {
+            return sells;
+        }
+
         private static Sales instance = null;
 
         private Sales(){
-            this.sells = new HashMap<String, Integer>();
+            this.sells = new ConcurrentHashMap<String, Integer>();
         }
 
         public static Sales getInstance(){
